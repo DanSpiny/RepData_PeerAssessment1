@@ -116,6 +116,22 @@ summary(steps_per_day2$sum_steps)
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
+<p>Lets create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.</p>
+```{r}
+steps_per_weekdays <- mutate(steps_tbl2, wd = factor(weekdays(date) %in% c("Sunday", "Saturday")))
+levels(steps_per_weekdays$wd) <- c("weekday", "weekend")
+wd_act_pattern <- mutate(steps_per_weekdays, interval = parse_date_time(sprintf("%04d", interval), "%H%M"))
+wd_act_pattern <- wd_act_pattern %>% group_by(interval, wd) %>% summarise(avg_steps = mean(steps))
+```
+<p>Now we can make a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis)</p>
+```{r}
+ggplot(wd_act_pattern, aes(interval, avg_steps)) +
+    geom_line() +
+    scale_x_datetime(breaks = "120 min", labels = date_format("%H:%M")) +
+    facet_grid(wd ~ .) +
+    ylab("Average number of steps")
+```
+<p>So we can see that the activity patterns between weekdays and weekends are quite different. During weeekdays our subject's active phase starts earlier (around 6:00) and has a glaring peek around 9:00. Meanwhile, during weekends subject's active phase starts later (around 8:00) and has a lot of medium peaks</p>
 ```{r}
 setwd(wd_saved)
 ```
