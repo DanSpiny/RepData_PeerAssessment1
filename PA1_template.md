@@ -65,12 +65,28 @@ steps_hist + geom_histogram(binwidth = r / (log2(n)+1), alpha = .5) +
 <p> Mean total number of steps taken per day can be found from the summary output: </p>
 
 ```r
-summary(steps_per_day$sum_steps)
+summary(steps_per_day$sum_steps, digits = 7)
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##      41    8841   10760   10770   13290   21190       8
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+##    41.00  8841.00 10765.00 10766.19 13294.00 21194.00        8
+```
+
+```r
+mean(steps_per_day$sum_steps, na.rm = TRUE)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+median(steps_per_day$sum_steps, na.rm = TRUE)
+```
+
+```
+## [1] 10765
 ```
 
 
@@ -144,12 +160,28 @@ steps_hist + geom_histogram(binwidth = r / (log2(n)+1), alpha = .5) +
 <p> New mean total number of steps taken per day can be found from the summary output: </p>
 
 ```r
-summary(steps_per_day2$sum_steps)
+summary(steps_per_day2$sum_steps, digits = 7)
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##      41    9819   10770   10770   12810   21190
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##    41.00  9819.00 10766.19 10766.19 12811.00 21194.00
+```
+
+```r
+mean(steps_per_day2$sum_steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+median(steps_per_day2$sum_steps)
+```
+
+```
+## [1] 10766.19
 ```
 <p> As we can see, imputing missing values hasn't changed mean and median significantly.
 
